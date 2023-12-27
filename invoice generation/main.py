@@ -8,7 +8,7 @@ filepaths = glob.glob('./invoices/*.xlsx')
 
 for filepath in filepaths:
     # here filepath = invoices/10001-2023.1.18.xlsx
-    # by doing stem we get only the filename - 10001-2023.1.18.xlsx
+    # by doing stem we get only the filename - 10001-2023.1.18 (without extension)
     filename = Path(filepath).stem
     invoice_num, date = filename.split('-')
 
