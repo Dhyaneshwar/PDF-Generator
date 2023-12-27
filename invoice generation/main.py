@@ -3,9 +3,12 @@ import glob
 from fpdf import FPDF 
 from pathlib import Path 
 
+# Getting all the filepaths of invoices from folder 
 filepaths = glob.glob('./invoices/*.xlsx')
 
 for filepath in filepaths:
+    # here filepath = invoices/10001-2023.1.18.xlsx
+    # by doing stem we get only the filename - 10001-2023.1.18.xlsx
     filename = Path(filepath).stem
     invoice_num, date = filename.split('-')
 
@@ -36,6 +39,8 @@ for filepath in filepaths:
         pdf.cell(w=30, h=8, txt=f"{row['price_per_unit']}", border=1)
         pdf.cell(w=30, h=8, txt=f"{row['total_price']}", border=1, ln=1)
 
+        # total can also be calculated by:-
+        # total = df['total_price'].sum()
         sum = sum + row['total_price']
 
     pdf.cell(w=35, h=8, txt="", border=1)
@@ -43,7 +48,6 @@ for filepath in filepaths:
     pdf.cell(w=30, h=8, txt="", border=1)
     pdf.cell(w=30, h=8, txt="", border=1)
     pdf.cell(w=30, h=8, txt=f"{sum}", border=1, ln=1)
-
 
     pdf.cell(w=0, h=8, txt=f'The total due amount is {sum} Euros.')
 
